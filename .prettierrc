@@ -1,0 +1,11 @@
+{
+  "semi": "off",
+  "semi-style": "off", 
+  "brace-style": "off", 
+  "indent": "off", 
+  "comma-spacing": "off",
+  "func-call-spacing": "off",
+  "no-extra-semi": "off",
+  "quotes": "off",
+  "space-before-function-paren": "off"
+}

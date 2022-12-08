@@ -137,38 +137,40 @@ export class CellContentParser {
       } else if (isError(content, this.config.errorMapping)) {
         return new CellContent.Error(this.config.errorMapping[content.toUpperCase()])
       } else {
-        let trimmedContent = content.trim()
-        let mode = 0
-        let currency
-        if (trimmedContent.endsWith('%')) {
-          mode = 1
-          trimmedContent = trimmedContent.slice(0, trimmedContent.length - 1)
-        } else {
-          const res = this.currencyMatcher(trimmedContent)
-          if (res !== undefined) {
-            mode = 2;
-            [currency, trimmedContent] = res
-          }
-        }
+        // let trimmedContent = content.trim()
+        // let mode = 0
+        // let currency
+        // if (trimmedContent.endsWith('%')) {
+        //   mode = 1
+        //   trimmedContent = trimmedContent.slice(0, trimmedContent.length - 1)
+        // } else {
+        //   const res = this.currencyMatcher(trimmedContent)
+        //   if (res !== undefined) {
+        //     mode = 2;
+        //     [currency, trimmedContent] = res
+        //   }
+        // }
 
-        const val = this.numberLiteralsHelper.numericStringToMaybeNumber(trimmedContent)
-        if (val !== undefined) {
-          let parseAsNum
-          if (mode === 1) {
-            parseAsNum = new PercentNumber(val / 100)
-          } else if (mode === 2) {
-            parseAsNum = new CurrencyNumber(val, currency as string)
-          } else {
-            parseAsNum = val
-          }
-          return new CellContent.Number(parseAsNum)
-        }
-        const parsedDateNumber = this.dateHelper.dateStringToDateNumber(trimmedContent)
-        if (parsedDateNumber !== undefined) {
-          return new CellContent.Number(parsedDateNumber)
-        } else {
-          return new CellContent.String(content.startsWith('\'') ? content.slice(1) : content)
-        }
+        // const val = this.numberLiteralsHelper.numericStringToMaybeNumber(trimmedContent)
+        // if (val !== undefined) {
+        //   let parseAsNum
+        //   if (mode === 1) {
+        //     parseAsNum = new PercentNumber(val / 100)
+        //   } else if (mode === 2) {
+        //     parseAsNum = new CurrencyNumber(val, currency as string)
+        //   } else {
+        //     parseAsNum = val
+        //   }
+        //   return new CellContent.Number(parseAsNum)
+        // }
+        // const parsedDateNumber = this.dateHelper.dateStringToDateNumber(trimmedContent)
+        // if (parsedDateNumber !== undefined) {
+        //   return new CellContent.Number(parsedDateNumber)
+        // } else {
+        //   return new CellContent.String(content.startsWith('\'') ? content.slice(1) : content)
+        // }
+
+        return new CellContent.String(content.startsWith('\'') ? content.slice(1) : content)
       }
     } else {
       throw new UnableToParseError(content)

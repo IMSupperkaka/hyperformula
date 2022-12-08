@@ -19,7 +19,7 @@ try {
     assert(HyperFormula.buildDate.split(' ')[0] === htConfig.HT_BUILD_DATE.split(' ')[0])
 
     const engine = HyperFormula.buildFromArray([
-        ['42', '=A1 + 2']
+        [42, '=A1 + 2']
     ], { licenseKey: 'gpl-v3' })
 
     const valueA1 = engine.getCellValue({ sheet: 0, row: 0, col: 0 })
