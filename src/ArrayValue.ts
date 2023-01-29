@@ -70,7 +70,10 @@ export class ArrayValue implements IArray {
 
   public addColumns(aboveColumn: number, numberOfColumns: number) {
     for (let i = 0; i < this.height(); i++) {
-      this.array[i].splice(aboveColumn, 0, ...new Array(numberOfColumns).fill(EmptyValue))
+
+      if (this.array[i]) {
+        this.array[i].splice(aboveColumn, 0, ...new Array(numberOfColumns).fill(EmptyValue))
+      }
     }
     this.size.width += numberOfColumns
   }
