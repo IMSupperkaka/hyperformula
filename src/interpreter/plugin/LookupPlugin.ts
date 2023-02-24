@@ -23,7 +23,7 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
       parameters: [
         {argumentType: ArgumentTypes.NOERROR},
         {argumentType: ArgumentTypes.RANGE},
-        {argumentType: ArgumentTypes.RANGE},
+        {argumentType: ArgumentTypes.RANGE, optionalArg: true},
       ]
     },
     'VLOOKUP': {
@@ -55,24 +55,32 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
   }
   private rowSearch: RowSearchStrategy = new RowSearchStrategy(this.dependencyGraph)
     /**
-   * Corresponds to LOOKUP(key, rangeValue, range)
-   *
-   * @param ast
-   * @param state
-   *  searchRange的第一列【优先列， 单行是按行查找】 查找key 对应的index 再在resultRange【单行｜单列】中查找第index个对应的值 返回
-   */
+     * Corresponds to LOOKUP(key, rangeValue, range)
+     *
+     * @param ast
+     * @param state
+     *  searchRange的第一列【优先列， 单行是按行查找】 查找key 对应的index 再在resultRange【单行｜单列】中查找第index个对应的值 返回
+     */
     public lookup(ast: ProcedureAst, state: InterpreterState): InterpreterValue {
-      return this.runFunction(ast.args, state, this.metadata('LOOKUP'), (key: RawNoErrorScalarValue, rangeValue: SimpleRangeValue, rangeResultValue: SimpleRangeValue) => {
+      return this.runFunction(ast.args, state, this.metadata('LOOKUP'), (key: RawNoErrorScalarValue, rangeValue: SimpleRangeValue, rangeResultValue?: SimpleRangeValue) => {
+      
         const range = rangeValue.range
-        const resRange = rangeResultValue.range
         if (range === undefined) {
           return new CellError(ErrorType.VALUE, ErrorMessage.WrongType)
         }
-        if (resRange === undefined || (resRange?.start.col !== resRange?.end.col && resRange?.start.row !== resRange?.end.row) ) {
-          return new CellError(ErrorType.VALUE, ErrorMessage.WrongType)
+        // 3个参数的情况下
+        if(rangeResultValue) {
+          const resRange = rangeResultValue.range
+
+          if (resRange === undefined || (resRange?.start.col !== resRange?.end.col && resRange?.start.row !== resRange?.end.row) ) {
+            return new CellError(ErrorType.VALUE, ErrorMessage.WrongType)
+          }
+    
+          return this.doLookup(zeroIfEmpty(key), rangeValue, rangeResultValue)
         }
-  
-        return this.doLookup(zeroIfEmpty(key), rangeValue, rangeResultValue)
+
+        // 2个参数情况下
+        return this.doLookupInSearchRange(zeroIfEmpty(key), rangeValue)
       })
     }
   /**
@@ -122,14 +130,15 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
     })
   }
 
+
   public match(ast: ProcedureAst, state: InterpreterState): InterpreterValue {
     return this.runFunction(ast.args, state, this.metadata('MATCH'), (key: RawNoErrorScalarValue, rangeValue: SimpleRangeValue, type: number) => {
       return this.doMatch(zeroIfEmpty(key), rangeValue, type)
     })
   }
 
+
   protected searchInRange(key: RawNoErrorScalarValue, range: SimpleRangeValue, sorted: boolean, searchStrategy: SearchStrategy): number {
-    // console.log('searchInRange --fn', range)
     if (!sorted && typeof key === 'string' && this.arithmeticHelper.requiresRegex(key)) {
       return searchStrategy.advancedFind(
         this.arithmeticHelper.eqMatcherFunction(key),
@@ -140,9 +149,28 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
       return searchStrategy.find(key, range, searchOptions)
     }
   }
+  /**
+   * doLookupInSearchRange
+   * 对只有2个参数的lookup处理
+   */
+  private doLookupInSearchRange(key: RawNoErrorScalarValue, rangeValue: SimpleRangeValue): InternalScalarValue {
+    this.dependencyGraph.stats.start(StatType.LOOKUP)
+    const range = rangeValue.range
+    // 按column搜索 即竖直方向搜索 rows
+    const isColumnSearch = (range?.end?.row || 0) > (range?.start?.row || 0)
+    
+    console.log('range?.end', range)
+    if(isColumnSearch) {
+      return this.doVlookup(zeroIfEmpty(key), rangeValue, range?.end?.col || 0, false)
+    } else {
+      return  this.doHlookup(zeroIfEmpty(key), rangeValue, 0, false)
+    }
+  }
 
+  /**
+   * 处理三个参数的doLookup
+   */
   private doLookup(key: RawNoErrorScalarValue, rangeValue: SimpleRangeValue, rangeResultValue: SimpleRangeValue): InternalScalarValue {
-  
     this.dependencyGraph.stats.start(StatType.LOOKUP)
     const range = rangeValue.range
     const resultRange = rangeResultValue.range
@@ -174,10 +202,6 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
     if (index === -1) {
       return new CellError(ErrorType.NA, ErrorMessage.ValueNotFound)
     }
-    console.log('range')
-
-    console.log('index', index)
-
     let value
     if (resultRange === undefined) {
       value = rangeResultValue?.data?.[0]?.[index]
@@ -190,13 +214,15 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
       }
       value = this.dependencyGraph.getCellValue(address)
     }
-    console.log('value', value)
 
     if (value instanceof SimpleRangeValue) {
       return new CellError(ErrorType.VALUE, ErrorMessage.WrongType)
     }
     return value
   }
+  /**
+   *
+   */
   private doVlookup(key: RawNoErrorScalarValue, rangeValue: SimpleRangeValue, index: number, sorted: boolean): InternalScalarValue {
     this.dependencyGraph.stats.start(StatType.VLOOKUP)
     const range = rangeValue.range
@@ -228,6 +254,9 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
     return value
   }
 
+  /**
+   *
+   */
   private doHlookup(key: RawNoErrorScalarValue, rangeValue: SimpleRangeValue, index: number, sorted: boolean): InternalScalarValue {
     const range = rangeValue.range
     let searchedRange
@@ -242,6 +271,7 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
       return new CellError(ErrorType.NA, ErrorMessage.ValueNotFound)
     }
 
+    console.log('colIndex', colIndex)
     let value
     if (range === undefined) {
       value = rangeValue.data[index][colIndex]
@@ -253,9 +283,13 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
     if (value instanceof SimpleRangeValue) {
       return new CellError(ErrorType.VALUE, ErrorMessage.WrongType)
     }
+    console.log('value', value)
     return value
   }
 
+  /**
+   *
+   */
   private doMatch(key: RawNoErrorScalarValue, rangeValue: SimpleRangeValue, type: number): InternalScalarValue {
     if (![-1, 0, 1].includes(type)) {
       return new CellError(ErrorType.VALUE, ErrorMessage.BadMode)

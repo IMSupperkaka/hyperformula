@@ -73,3 +73,30 @@ describe('LOOKUP', () => {
 
 
 })
+describe('LOOKUP', () => {
+  it('2参数：按列查找值位置，返回最后一列对应位置的结果', () => {
+    const engine = HyperFormula.buildFromArray([
+      ['1', 'a'],
+      ['2', '结果'],
+      ['3', 'c'],
+      ['4', 'd'],
+      ['5', 'e'],
+      ['=LOOKUP("2", A1:B5)'],
+    ])
+
+    expect(engine.getCellValue(adr('A6'))).toEqual('结果')
+  })
+  it('2参数：按行查找值位置，返回最后一行对应位置的结果 ', () => {
+    //返回的搜索的值： 【因为按行查找说明只有一行 一行的最后一行还是本行】
+    const engine = HyperFormula.buildFromArray([
+      ['1', 'a', 'aa'],
+      ['2', '结果', '结果几个'],
+      ['3', 'c', 'cc'],
+      ['4', 'd', 'dd'],
+      ['5', 'e', 'ee'],
+      ['=LOOKUP("结果", A2:C2)'],
+    ])
+
+    expect(engine.getCellValue(adr('A6'))).toEqual('结果')
+  })
+})
