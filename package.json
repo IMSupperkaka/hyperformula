@@ -79,6 +79,8 @@
     "test:browser": "cross-env-shell BABEL_ENV=dist env-cmd -f ht.config.js karma start",
     "test:browser.debug": "cross-env-shell BABEL_ENV=dist NODE_ENV=debug env-cmd -f ht.config.js karma start",
     "test:performance": "npm run benchmark:basic && npm run benchmark:cruds",
+    "test:myTest": "jest -i test/test.spec.ts -t --silent=false",
+    
     "typedoc:build": "typedoc --options .typedoc.ts",
     "typedoc:build-api": "typedoc --options .typedoc.md.ts",
     "typedoc:serve": "npm run typedoc:build && serve doc -p 5005",

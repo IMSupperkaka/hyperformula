@@ -225,6 +225,7 @@ const dictionary: RawTranslationPackage = {
     VARPA: 'VARIANZENA',
     'VAR.S': 'VAR.S',
     VLOOKUP: 'SVERWEIS',
+    LOOKUP: 'SVERWEIS',
     WEEKDAY: 'WOCHENTAG',
     WEEKNUM: 'KALENDERWOCHE',
     WORKDAY: 'ARBEITSTAG',

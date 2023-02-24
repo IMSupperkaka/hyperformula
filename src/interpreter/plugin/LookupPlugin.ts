@@ -18,6 +18,14 @@ import {ArgumentTypes, FunctionPlugin, FunctionPluginTypecheck} from './Function
 
 export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypecheck<LookupPlugin> {
   public static implementedFunctions = {
+    'LOOKUP': {
+      method: 'lookup',
+      parameters: [
+        {argumentType: ArgumentTypes.NOERROR},
+        {argumentType: ArgumentTypes.RANGE},
+        {argumentType: ArgumentTypes.RANGE},
+      ]
+    },
     'VLOOKUP': {
       method: 'vlookup',
       parameters: [
@@ -46,7 +54,27 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
     },
   }
   private rowSearch: RowSearchStrategy = new RowSearchStrategy(this.dependencyGraph)
-
+    /**
+   * Corresponds to LOOKUP(key, rangeValue, range)
+   *
+   * @param ast
+   * @param state
+   *  searchRange的第一列【优先列， 单行是按行查找】 查找key 对应的index 再在resultRange【单行｜单列】中查找第index个对应的值 返回
+   */
+    public lookup(ast: ProcedureAst, state: InterpreterState): InterpreterValue {
+      return this.runFunction(ast.args, state, this.metadata('LOOKUP'), (key: RawNoErrorScalarValue, rangeValue: SimpleRangeValue, rangeResultValue: SimpleRangeValue) => {
+        const range = rangeValue.range
+        const resRange = rangeResultValue.range
+        if (range === undefined) {
+          return new CellError(ErrorType.VALUE, ErrorMessage.WrongType)
+        }
+        if (resRange === undefined || (resRange?.start.col !== resRange?.end.col && resRange?.start.row !== resRange?.end.row) ) {
+          return new CellError(ErrorType.VALUE, ErrorMessage.WrongType)
+        }
+  
+        return this.doLookup(zeroIfEmpty(key), rangeValue, rangeResultValue)
+      })
+    }
   /**
    * Corresponds to VLOOKUP(key, range, index, [sorted])
    *
@@ -101,6 +129,7 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
   }
 
   protected searchInRange(key: RawNoErrorScalarValue, range: SimpleRangeValue, sorted: boolean, searchStrategy: SearchStrategy): number {
+    // console.log('searchInRange --fn', range)
     if (!sorted && typeof key === 'string' && this.arithmeticHelper.requiresRegex(key)) {
       return searchStrategy.advancedFind(
         this.arithmeticHelper.eqMatcherFunction(key),
@@ -112,6 +141,62 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
     }
   }
 
+  private doLookup(key: RawNoErrorScalarValue, rangeValue: SimpleRangeValue, rangeResultValue: SimpleRangeValue): InternalScalarValue {
+  
+    this.dependencyGraph.stats.start(StatType.LOOKUP)
+    const range = rangeValue.range
+    const resultRange = rangeResultValue.range
+    let searchedRange
+    let resultedRange
+    const isColumnSearch = (range?.end?.row || 0) > (range?.start?.row || 0)
+    if (range === undefined) {
+      searchedRange = SimpleRangeValue.onlyValues(rangeValue.data.map((arg) => [arg[0]]))
+    } else {
+      if (isColumnSearch) {
+        searchedRange = SimpleRangeValue.onlyRange(AbsoluteCellRange.spanFrom(range.start, 1, range.height()), this.dependencyGraph)
+      } else {
+        searchedRange = SimpleRangeValue.onlyRange(AbsoluteCellRange.spanFrom(range.start, range.width(), 1), this.dependencyGraph)
+      }
+    }
+    if (resultRange === undefined) {
+      resultedRange = SimpleRangeValue.onlyValues(rangeResultValue.data.map((arg) => [arg[0]]))
+    } else {
+      resultedRange = SimpleRangeValue.onlyRange(AbsoluteCellRange.spanFrom(resultRange.start, 1, resultRange.height()), this.dependencyGraph)
+    }
+    let index
+
+    // row 先列后行 【当有多列的时候， 按第一列查找 】
+    if (isColumnSearch) {
+      index= this.searchInRange(key, searchedRange, false, this.columnSearch)
+    } else {
+      index = this.searchInRange(key, searchedRange, false, this.rowSearch)
+    }
+    if (index === -1) {
+      return new CellError(ErrorType.NA, ErrorMessage.ValueNotFound)
+    }
+    console.log('range')
+
+    console.log('index', index)
+
+    let value
+    if (resultRange === undefined) {
+      value = rangeResultValue?.data?.[0]?.[index]
+    } else {
+      let address
+      if((resultRange?.end?.row || 0) > (resultRange?.start?.row || 0)) {
+         address = simpleCellAddress(resultRange.sheet, resultRange.start.col, resultRange.start.row + index)
+      } else {
+        address = simpleCellAddress(resultRange.sheet, resultRange.start.col + index, resultRange.start.row)
+      }
+      value = this.dependencyGraph.getCellValue(address)
+    }
+    console.log('value', value)
+
+    if (value instanceof SimpleRangeValue) {
+      return new CellError(ErrorType.VALUE, ErrorMessage.WrongType)
+    }
+    return value
+  }
   private doVlookup(key: RawNoErrorScalarValue, rangeValue: SimpleRangeValue, index: number, sorted: boolean): InternalScalarValue {
     this.dependencyGraph.stats.start(StatType.VLOOKUP)
     const range = rangeValue.range

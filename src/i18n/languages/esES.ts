@@ -225,6 +225,7 @@ export const dictionary: RawTranslationPackage = {
     VARPA: 'VARPA',
     'VAR.S': 'VAR.S',
     VLOOKUP: 'BUSCARV',
+    LOOKUP: 'BUSCARV',
     WEEKDAY: 'DIASEM',
     WEEKNUM: 'NUM.DE.SEMANA',
     WORKDAY: 'DIA.LAB',
