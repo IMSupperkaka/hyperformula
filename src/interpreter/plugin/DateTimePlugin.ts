@@ -410,6 +410,7 @@ export class DateTimePlugin extends FunctionPlugin implements FunctionPluginType
         if (dateTime === undefined) {
           return new CellError(ErrorType.VALUE, ErrorMessage.IncorrectDateTime)
         }
+       
         if (!instanceOfSimpleDate(dateTime)) {
           return 0
         }
