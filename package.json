@@ -10,7 +10,7 @@
     "url": "https://github.com/handsontable/hyperformula/issues"
   },
   "author": "Handsoncode <hello@handsontable.com>",
-  "version": "2.2.2-beta.3",
+  "version": "2.2.2-beta.5",
   "keywords": [
     "formula",
     "spreadsheet",
@@ -79,7 +79,8 @@
     "test:browser": "cross-env-shell BABEL_ENV=dist env-cmd -f ht.config.js karma start",
     "test:browser.debug": "cross-env-shell BABEL_ENV=dist NODE_ENV=debug env-cmd -f ht.config.js karma start",
     "test:performance": "npm run benchmark:basic && npm run benchmark:cruds",
-    "test:myTest": "jest -i test/dateValue.spec.ts -t --silent=false",
+    "test:dateValue": "jest -i test/dateValue.spec.ts -t --silent=false",
+    "test:value": "jest -i test/value.spec.ts -t --silent=false",
     
     "typedoc:build": "typedoc --options .typedoc.ts",
     "typedoc:build-api": "typedoc --options .typedoc.md.ts",

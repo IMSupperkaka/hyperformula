@@ -8,6 +8,11 @@ import {ErrorMessage} from '../../error-message'
 import {ProcedureAst} from '../../parser'
 import {InterpreterState} from '../InterpreterState'
 import {InterpreterValue, RawScalarValue} from '../InterpreterValue'
+import {
+  instanceOfSimpleDate,
+  instanceOfSimpleTime,
+  timeToNumber,
+} from '../../DateTimeHelper'
 import {ArgumentTypes, FunctionPlugin, FunctionPluginTypecheck} from './FunctionPlugin'
 
 /**
@@ -22,6 +27,12 @@ export class TextPlugin extends FunctionPlugin implements FunctionPluginTypechec
       ],
       repeatLastArgs: 1,
       expandRanges: true,
+    },
+    'VALUE': {
+      method: 'value',
+      parameters: [
+        {argumentType: ArgumentTypes.STRING}
+      ],
     },
     'EXACT': {
       method: 'exact',
@@ -155,6 +166,32 @@ export class TextPlugin extends FunctionPlugin implements FunctionPluginTypechec
   public concatenate(ast: ProcedureAst, state: InterpreterState): InterpreterValue {
     return this.runFunction(ast.args, state, this.metadata('CONCATENATE'), (...args) => {
       return ''.concat(...args)
+    })
+  }
+  /**
+   * Corresponds to VALUE(value1)
+   *
+   * Concatenates provided arguments to one string.
+   *
+   * @param ast
+   * @param state
+   */
+  public value(ast: ProcedureAst, state: InterpreterState): InterpreterValue {
+    return this.runFunction(ast.args, state, this.metadata('VALUE'), (text: string) => {
+      if (text.match(/^[+-]?\d*\.?\d*$/)) {
+        // 包括小数字
+        return parseFloat(text)
+      }
+
+      const {dateTime} = this.dateTimeHelper.parseDateTimeFromConfigFormats(text)
+ 
+      if (dateTime && instanceOfSimpleDate(dateTime)) {
+        // 保留5位小数
+        return (instanceOfSimpleTime(dateTime) ? Math.round(timeToNumber(dateTime) * 100000) / 100000 : 0) +
+        this.dateTimeHelper.dateToNumber(dateTime)
+      }
+     
+      return new CellError(ErrorType.VALUE, ErrorMessage.WrongType)
     })
   }
 

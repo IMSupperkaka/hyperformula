@@ -166,6 +166,7 @@ const dictionary: RawTranslationPackage = {
     POWER: 'KUVVET',
     PPMT: 'ANA_PARA_ÖDEMESİ',
     PROPER: 'YAZIM.DÜZENİ',
+    VALUE: 'VALUE',
     PV: 'BD',
     RADIANS: 'RADYAN',
     RAND: 'S_SAYI_ÜRET',

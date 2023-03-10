@@ -166,6 +166,7 @@ const dictionary: RawTranslationPackage = {
     POWER: 'POTENS',
     PPMT: 'H.YDELSE',
     PROPER: 'STORT.FORBOGSTAV',
+    VALUE: 'VALUE',
     PV: 'NV',
     RADIANS: 'RADIANER',
     RAND: 'SLUMP',

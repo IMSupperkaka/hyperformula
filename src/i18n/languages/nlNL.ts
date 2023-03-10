@@ -166,6 +166,7 @@ const dictionary: RawTranslationPackage = {
     POWER: 'MACHT',
     PPMT: 'PBET',
     PROPER: 'BEGINLETTERS',
+    VALUE: 'VALUE',
     PV: 'HW',
     RADIANS: 'RADIALEN',
     RAND: 'ASELECT',

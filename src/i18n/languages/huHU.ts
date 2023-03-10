@@ -166,6 +166,7 @@ const dictionary: RawTranslationPackage = {
     POWER: 'HATVÁNY',
     PPMT: 'PRÉSZLET',
     PROPER: 'TNÉV',
+    VALUE: 'VALUE',
     PV: 'MÉ',
     RADIANS: 'RADIÁN',
     RAND: 'VÉL',

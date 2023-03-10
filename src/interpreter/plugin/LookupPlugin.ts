@@ -158,8 +158,6 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
     const range = rangeValue.range
     // 按column搜索 即竖直方向搜索 rows
     const isColumnSearch = (range?.end?.row || 0) > (range?.start?.row || 0)
-    
-    console.log('range?.end', range)
     if(isColumnSearch) {
       return this.doVlookup(zeroIfEmpty(key), rangeValue, range?.end?.col || 0, false)
     } else {
@@ -175,7 +173,7 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
     const range = rangeValue.range
     const resultRange = rangeResultValue.range
     let searchedRange
-    let resultedRange
+    // let resultedRange
     const isColumnSearch = (range?.end?.row || 0) > (range?.start?.row || 0)
     if (range === undefined) {
       searchedRange = SimpleRangeValue.onlyValues(rangeValue.data.map((arg) => [arg[0]]))
@@ -185,11 +183,6 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
       } else {
         searchedRange = SimpleRangeValue.onlyRange(AbsoluteCellRange.spanFrom(range.start, range.width(), 1), this.dependencyGraph)
       }
-    }
-    if (resultRange === undefined) {
-      resultedRange = SimpleRangeValue.onlyValues(rangeResultValue.data.map((arg) => [arg[0]]))
-    } else {
-      resultedRange = SimpleRangeValue.onlyRange(AbsoluteCellRange.spanFrom(resultRange.start, 1, resultRange.height()), this.dependencyGraph)
     }
     let index
 
@@ -271,7 +264,6 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
       return new CellError(ErrorType.NA, ErrorMessage.ValueNotFound)
     }
 
-    console.log('colIndex', colIndex)
     let value
     if (range === undefined) {
       value = rangeValue.data[index][colIndex]
@@ -283,7 +275,6 @@ export class LookupPlugin extends FunctionPlugin implements FunctionPluginTypech
     if (value instanceof SimpleRangeValue) {
       return new CellError(ErrorType.VALUE, ErrorMessage.WrongType)
     }
-    console.log('value', value)
     return value
   }
 
