@@ -147,7 +147,7 @@ const dictionary: RawTranslationPackage = {
     MONTH: 'HÓNAP',
     NA: 'HIÁNYZIK',
     NETWORKDAYS: 'ÖSSZ.MUNKANAP',
-    'NETWORKDAYS.INTL': 'ÖSSZ.MUNKANAP.INTL',
+    'NETWORKDAYS_INTL': 'ÖSSZ.MUNKANAP.INTL',
     NOMINAL: 'NÉVLEGES',
     NOT: 'NEM',
     NOW: 'MOST',

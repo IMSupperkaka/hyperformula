@@ -147,7 +147,7 @@ export const dictionary: RawTranslationPackage = {
     MONTH: 'MES',
     NA: 'NOD',
     NETWORKDAYS: 'DIAS.LAB',
-    'NETWORKDAYS.INTL': 'DIAS.LAB.INTL',
+    'NETWORKDAYS_INTL': 'DIAS.LAB.INTL',
     NOMINAL: 'TASA.NOMINAL',
     NOT: 'NO',
     NOW: 'AHORA',

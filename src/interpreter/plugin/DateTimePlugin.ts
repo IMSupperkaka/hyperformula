@@ -206,7 +206,7 @@ export class DateTimePlugin extends FunctionPlugin implements FunctionPluginType
         {argumentType: ArgumentTypes.RANGE, optionalArg: true}
       ],
     },
-    'NETWORKDAYS.INTL': {
+    'NETWORKDAYS_INTL': {
       method: 'networkdaysintl',
       parameters: [
         {argumentType: ArgumentTypes.NUMBER, minValue: 0},
@@ -586,7 +586,7 @@ export class DateTimePlugin extends FunctionPlugin implements FunctionPluginType
   }
 
   public networkdaysintl(ast: ProcedureAst, state: InterpreterState): InterpreterValue {
-    return this.runFunction(ast.args, state, this.metadata('NETWORKDAYS.INTL'),
+    return this.runFunction(ast.args, state, this.metadata('NETWORKDAYS_INTL'),
       (start, end, weekend, holidays) => this.networkdayscore(start, end, weekend, holidays)
     )
   }

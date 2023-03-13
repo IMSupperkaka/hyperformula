@@ -81,6 +81,7 @@
     "test:performance": "npm run benchmark:basic && npm run benchmark:cruds",
     "test:dateValue": "jest -i test/dateValue.spec.ts -t --silent=false",
     "test:value": "jest -i test/value.spec.ts -t --silent=false",
+    "test:networkdays.intl": "jest -i test/interpreter/function-networkdays.intl.spec.ts -t --silent=false",
     
     "typedoc:build": "typedoc --options .typedoc.ts",
     "typedoc:build-api": "typedoc --options .typedoc.md.ts",
