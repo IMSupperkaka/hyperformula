@@ -241,7 +241,7 @@ HyperFormula adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 - Added 9 text functions EXACT, LOWER, UPPER, MID, T, SUBSTITUTE, REPLACE, UNICODE, UNICHAR. [#159](https://github.com/handsontable/hyperformula/issues/159)
-- Added 5 datetime functions: INTERVAL, NETWORKDAYS, NETWORKDAYS_INTL, WORKDAY, WORKDAY.INTL. [#153](https://github.com/handsontable/hyperformula/issues/153)
+- Added 5 datetime functions: INTERVAL, NETWORKDAYS, NETWORKDAYS_INTL, WORKDAY, WORKDAY_INTL. [#153](https://github.com/handsontable/hyperformula/issues/153)
 - Added 3 information functions HLOOKUP, ROW, COLUMN. [#520](https://github.com/handsontable/hyperformula/pull/520)
 - Added 5 financial functions FVSCHEDULE, NPV, MIRR, PDURATION, XNPV. [#542](https://github.com/handsontable/hyperformula/pull/542)
 - Added 12 statistical functions VAR.P, VAR.S, VARA, VARPA, STDEV.P, STDEV.S, STDEVA, STDEVPA, VARP, VAR, STDEVP, STDEV. [#536](https://github.com/handsontable/hyperformula/pull/536)

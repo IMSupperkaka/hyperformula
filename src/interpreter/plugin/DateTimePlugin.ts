@@ -223,7 +223,7 @@ export class DateTimePlugin extends FunctionPlugin implements FunctionPluginType
         {argumentType: ArgumentTypes.RANGE, optionalArg: true}
       ],
     },
-    'WORKDAY.INTL': {
+    'WORKDAY_INTL': {
       method: 'workdayintl',
       parameters: [
         {argumentType: ArgumentTypes.NUMBER, minValue: 0},
@@ -598,7 +598,7 @@ export class DateTimePlugin extends FunctionPlugin implements FunctionPluginType
   }
 
   public workdayintl(ast: ProcedureAst, state: InterpreterState): InterpreterValue {
-    return this.runFunction(ast.args, state, this.metadata('WORKDAY.INTL'),
+    return this.runFunction(ast.args, state, this.metadata('WORKDAY_INTL'),
       (start, end, weekend, holidays) => this.workdaycore(start, end, weekend, holidays)
     )
   }

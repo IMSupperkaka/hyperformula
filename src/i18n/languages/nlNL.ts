@@ -229,7 +229,7 @@ const dictionary: RawTranslationPackage = {
     WEEKDAY: 'WEEKDAG',
     WEEKNUM: 'WEEKNUMMER',
     WORKDAY: 'WERKDAG',
-    'WORKDAY.INTL': 'WERKDAG.INTL',
+    'WORKDAY_INTL': 'WERKDAG.INTL',
     XNPV: 'NHW2',
     XOR: 'EX.OF',
     YEAR: 'JAAR',
