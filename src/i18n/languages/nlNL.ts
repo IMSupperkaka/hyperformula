@@ -147,7 +147,7 @@ const dictionary: RawTranslationPackage = {
     MONTH: 'MAAND',
     NA: 'NB',
     NETWORKDAYS: 'NETTO.WERKDAGEN',
-    'NETWORKDAYS_INTL': 'NETWERKDAGEN.INTL',
+    'NETWORKDAYS_INTL': 'NETWERKDAGEN_INTL',
     NOMINAL: 'NOMINALE.RENTE',
     NOT: 'NIET',
     NOW: 'NU',

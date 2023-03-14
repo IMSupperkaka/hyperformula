@@ -184,11 +184,16 @@ export class TextPlugin extends FunctionPlugin implements FunctionPluginTypechec
       }
 
       const {dateTime} = this.dateTimeHelper.parseDateTimeFromConfigFormats(text)
+      console.log('dateTime', dateTime)
  
       if (dateTime && instanceOfSimpleDate(dateTime)) {
         // 保留5位小数
         return (instanceOfSimpleTime(dateTime) ? Math.round(timeToNumber(dateTime) * 100000) / 100000 : 0) +
         this.dateTimeHelper.dateToNumber(dateTime)
+      }
+      if (dateTime && instanceOfSimpleTime(dateTime)) {
+          // 保留9位小数
+          return Math.round(timeToNumber(dateTime) * 1000000000) / 1000000000
       }
      
       return new CellError(ErrorType.VALUE, ErrorMessage.WrongType)
