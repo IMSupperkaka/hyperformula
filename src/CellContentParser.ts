@@ -116,6 +116,10 @@ export function isFormula(text: string): boolean {
     return false
   }
 
+  // &符号
+  if (/^=[+-]?(([a-zA-Z]*[0-9]+)|("\S+"))(&[+-]?(("\S+")|([a-zA-Z]*[0-9]+)))+$/.test(text)) {
+    return true
+  }
   // 科学计数法
   if (/^=\d(?:\.(\d*))?e([+-]\d+)/.test(text)) {
     return true
