@@ -17,6 +17,78 @@ describe('time', () => {
     
     expect(engine.getCellValue(adr('A6'))).toEqual(0.432638889)
   })
+  it('数字', () => {
+    const engine = HyperFormula.buildFromArray([
+      ['1', 'a', 'b', 'c'],
+      ['2', 'd', 'e', 'f'],
+      ['3', 'g', 'h', 'i'],
+      ['4', 'j', 'k', 'l'],
+      ['5', 'm', 'n,  o'],
+      ['=123'],
+    ])
+    
+    expect(engine.getCellValue(adr('A6'))).toEqual(123)
+  })
+  it('单元格', () => {
+    const engine = HyperFormula.buildFromArray([
+      ['1', 'a', 'b', 'c'],
+      ['2', 'd', 'e', 'f'],
+      ['3', 'g', 'h', 'i'],
+      ['4', 'j', 'k', 'l'],
+      ['5', 'm', 'n,  o'],
+      ['=A1'],
+    ])
+    
+    expect(engine.getCellValue(adr('A6'))).toEqual('1')
+  })
+  it('加减乘除', () => {
+    const engine = HyperFormula.buildFromArray([
+      ['1', 'a', 'b', 'c'],
+      ['2', 'd', 'e', 'f'],
+      ['3', 'g', 'h', 'i'],
+      ['4', 'j', 'k', 'l'],
+      ['5', 'm', 'n,  o'],
+      ['=12312+123'],
+    ])
+    
+    expect(engine.getCellValue(adr('A6'))).toEqual(12435)
+  })
+  it('数字+文本', () => {
+    const engine = HyperFormula.buildFromArray([
+      ['1', 'a', 'b', 'c'],
+      ['2', 'd', 'e', 'f'],
+      ['3', 'g', 'h', 'i'],
+      ['4', 'j', 'k', 'l'],
+      ['5', 'm', 'n,  o'],
+      ['=1231webn'],
+    ])
+    
+    expect(engine.getCellValue(adr('A6'))).toEqual('=1231webn')
+  })
+  it('数字+百分比', () => {
+    const engine = HyperFormula.buildFromArray([
+      ['1', 'a', 'b', 'c'],
+      ['2', 'd', 'e', 'f'],
+      ['3', 'g', 'h', 'i'],
+      ['4', 'j', 'k', 'l'],
+      ['5', 'm', 'n,  o'],
+      ['=1231%'],
+    ])
+    
+    expect(engine.getCellValue(adr('A6'))).toEqual(12.31)
+  })
+  it('数字+‘+’+百分比', () => {
+    const engine = HyperFormula.buildFromArray([
+      ['1', 'a', 'b', 'c'],
+      ['2', 'd', 'e', 'f'],
+      ['3', 'g', 'h', 'i'],
+      ['4', 'j', 'k', 'l'],
+      ['5', 'm', 'n,  o'],
+      ['=1231+%'],
+    ])
+    
+    expect(engine.getCellValue(adr('A6'))).toEqual('=1231+%')
+  })
 })
 
 // describe('value', () => {

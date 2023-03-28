@@ -47,29 +47,29 @@ export class BooleanPlugin extends FunctionPlugin implements FunctionPluginTypec
       repeatLastArgs: 1,
       expandRanges: true,
     },
-    'XOR': {
-      method: 'xor',
-      parameters: [
-        {argumentType: ArgumentTypes.BOOLEAN},
-      ],
-      repeatLastArgs: 1,
-      expandRanges: true,
-    },
+    // 'XOR': {
+    //   method: 'xor',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.BOOLEAN},
+    //   ],
+    //   repeatLastArgs: 1,
+    //   expandRanges: true,
+    // },
     'NOT': {
       method: 'not',
       parameters: [
         {argumentType: ArgumentTypes.BOOLEAN},
       ]
     },
-    'SWITCH': {
-      method: 'switch',
-      parameters: [
-        {argumentType: ArgumentTypes.NOERROR},
-        {argumentType: ArgumentTypes.SCALAR, passSubtype: true},
-        {argumentType: ArgumentTypes.SCALAR, passSubtype: true},
-      ],
-      repeatLastArgs: 1,
-    },
+    // 'SWITCH': {
+    //   method: 'switch',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.NOERROR},
+    //     {argumentType: ArgumentTypes.SCALAR, passSubtype: true},
+    //     {argumentType: ArgumentTypes.SCALAR, passSubtype: true},
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
     'IFERROR': {
       method: 'iferror',
       parameters: [
@@ -77,13 +77,13 @@ export class BooleanPlugin extends FunctionPlugin implements FunctionPluginTypec
         {argumentType: ArgumentTypes.SCALAR, passSubtype: true},
       ]
     },
-    'IFNA': {
-      method: 'ifna',
-      parameters: [
-        {argumentType: ArgumentTypes.SCALAR, passSubtype: true},
-        {argumentType: ArgumentTypes.SCALAR, passSubtype: true},
-      ]
-    },
+    // 'IFNA': {
+    //   method: 'ifna',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.SCALAR, passSubtype: true},
+    //     {argumentType: ArgumentTypes.SCALAR, passSubtype: true},
+    //   ]
+    // },
     'CHOOSE': {
       method: 'choose',
       parameters: [

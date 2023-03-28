@@ -84,13 +84,13 @@ export class NumericAggregationPlugin extends FunctionPlugin implements Function
       ],
       repeatLastArgs: 1,
     },
-    'SUMSQ': {
-      method: 'sumsq',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
+    // 'SUMSQ': {
+    //   method: 'sumsq',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
     'MAX': {
       method: 'max',
       parameters: [
@@ -105,20 +105,20 @@ export class NumericAggregationPlugin extends FunctionPlugin implements Function
       ],
       repeatLastArgs: 1,
     },
-    'MAXA': {
-      method: 'maxa',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
-    'MINA': {
-      method: 'mina',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
+    // 'MAXA': {
+    //   method: 'maxa',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
+    // 'MINA': {
+    //   method: 'mina',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
     'COUNT': {
       method: 'count',
       parameters: [
@@ -126,13 +126,13 @@ export class NumericAggregationPlugin extends FunctionPlugin implements Function
       ],
       repeatLastArgs: 1,
     },
-    'COUNTA': {
-      method: 'counta',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
+    // 'COUNTA': {
+    //   method: 'counta',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
     'AVERAGE': {
       method: 'average',
       parameters: [
@@ -147,86 +147,86 @@ export class NumericAggregationPlugin extends FunctionPlugin implements Function
       ],
       repeatLastArgs: 1,
     },
-    'PRODUCT': {
-      method: 'product',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
-    'VAR.S': {
-      method: 'vars',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
-    'VAR.P': {
-      method: 'varp',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
-    'VARA': {
-      method: 'vara',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
-    'VARPA': {
-      method: 'varpa',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
-    'STDEV.S': {
-      method: 'stdevs',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
-    'STDEV.P': {
-      method: 'stdevp',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
-    'STDEVA': {
-      method: 'stdeva',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
-    'STDEVPA': {
-      method: 'stdevpa',
-      parameters: [
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    },
-    'SUBTOTAL': {
-      method: 'subtotal',
-      parameters: [
-        {argumentType: ArgumentTypes.NUMBER},
-        {argumentType: ArgumentTypes.ANY}
-      ],
-      repeatLastArgs: 1,
-    }
+    // 'PRODUCT': {
+    //   method: 'product',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
+    // 'VAR.S': {
+    //   method: 'vars',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
+    // 'VAR.P': {
+    //   method: 'varp',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
+    // 'VARA': {
+    //   method: 'vara',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
+    // 'VARPA': {
+    //   method: 'varpa',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
+    // 'STDEV.S': {
+    //   method: 'stdevs',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
+    // 'STDEV.P': {
+    //   method: 'stdevp',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
+    // 'STDEVA': {
+    //   method: 'stdeva',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
+    // 'STDEVPA': {
+    //   method: 'stdevpa',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // },
+    // 'SUBTOTAL': {
+    //   method: 'subtotal',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.NUMBER},
+    //     {argumentType: ArgumentTypes.ANY}
+    //   ],
+    //   repeatLastArgs: 1,
+    // }
   }
 
   public static aliases = {
-    VAR: 'VAR.S',
-    VARP: 'VAR.P',
-    STDEV: 'STDEV.S',
-    STDEVP: 'STDEV.P',
-    VARS: 'VAR.S',
-    STDEVS: 'STDEV.S',
+    // VAR: 'VAR.S',
+    // VARP: 'VAR.P',
+    // STDEV: 'STDEV.S',
+    // STDEVP: 'STDEV.P',
+    // VARS: 'VAR.S',
+    // STDEVS: 'STDEV.S',
   }
 
   /**

@@ -18,12 +18,12 @@ export class CharPlugin extends FunctionPlugin implements FunctionPluginTypechec
         {argumentType: ArgumentTypes.NUMBER}
       ],
     },
-    'UNICHAR': {
-      method: 'unichar',
-      parameters: [
-        {argumentType: ArgumentTypes.NUMBER}
-      ],
-    },
+    // 'UNICHAR': {
+    //   method: 'unichar',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.NUMBER}
+    //   ],
+    // },
   }
 
   public char(ast: ProcedureAst, state: InterpreterState): InterpreterValue {

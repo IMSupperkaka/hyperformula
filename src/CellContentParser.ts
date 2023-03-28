@@ -3,12 +3,12 @@
  * Copyright (c) 2022 Handsoncode. All rights reserved.
  */
 
-import {CellError, ErrorType} from './Cell'
-import {Config} from './Config'
-import {DateTimeHelper, timeToNumber} from './DateTimeHelper'
-import {ErrorMessage} from './error-message'
-import {UnableToParseError} from './errors'
-import {fixNegativeZero, isNumberOverflow} from './interpreter/ArithmeticHelper'
+import { CellError, ErrorType } from './Cell'
+import { Config } from './Config'
+import { DateTimeHelper, timeToNumber } from './DateTimeHelper'
+import { ErrorMessage } from './error-message'
+import { UnableToParseError } from './errors'
+import { fixNegativeZero, isNumberOverflow } from './interpreter/ArithmeticHelper'
 import {
   cloneNumber,
   CurrencyNumber,
@@ -19,32 +19,56 @@ import {
   PercentNumber,
   TimeNumber
 } from './interpreter/InterpreterValue'
-import {Maybe} from './Maybe'
-import {NumberLiteralHelper} from './NumberLiteralHelper'
+import { Maybe } from './Maybe'
+import { NumberLiteralHelper } from './NumberLiteralHelper'
 
 export type RawCellContent = Date | string | number | boolean | null | undefined
 
 export namespace CellContent {
+  /**
+   *
+   */
   export class Number {
+    /**
+     *
+     */
     constructor(public readonly value: ExtendedNumber) {
       this.value = cloneNumber(this.value, fixNegativeZero(getRawValue(this.value)))
     }
   }
 
+  /**
+   *
+   */
   export class String {
+    /**
+     *
+     */
     constructor(public readonly value: string) {
     }
   }
 
+  /**
+   *
+   */
   export class Boolean {
+    /**
+     *
+     */
     constructor(public readonly value: boolean) {
     }
   }
 
+  /**
+   *
+   */
   export class Empty {
 
     private static instance: Empty
 
+    /**
+     *
+     */
     public static getSingletonInstance() {
       if (!Empty.instance) {
         Empty.instance = new Empty()
@@ -53,14 +77,26 @@ export namespace CellContent {
     }
   }
 
+  /**
+   *
+   */
   export class Formula {
+    /**
+     *
+     */
     constructor(public readonly formula: string) {
     }
   }
 
+  /**
+   *
+   */
   export class Error {
     public readonly value: CellError
 
+    /**
+     *
+     */
     constructor(errorType: ErrorType, message?: string) {
       this.value = new CellError(errorType, message)
     }
@@ -75,27 +111,70 @@ export namespace CellContent {
  * @param text - formula
  */
 export function isFormula(text: string): boolean {
-  return text.startsWith('=')
+  //  9. 符号 */开头 + 数字 文本处理
+  if (/^=[*/]+[0-9]*/.test(text)) {
+    return false
+  }
+
+  // 科学计数法
+  if (/^=\d(?:\.(\d*))?e([+-]\d+)/.test(text)) {
+    return true
+  }
+  // 数字之间或之前 + - * / 公式
+  if (/^=([0-9]*[*/+-][0-9]+)+$/.test(text)) {
+    return true
+  }
+  // 数字 + % 文本处理
+  if (/^=[0-9]+%/.test(text)) {
+    return true
+  }
+
+  // 5. 数字 + 文字【非数字】 文本处理  【上一个已经排除数字后是+ - * / 百分比的情况】
+  if (/^=[0-9]+\D/.test(text)) {
+    return false
+  }
+
+  // 8. = 中文文本  文本处理
+  if (/^=[\u4E00-\u9FA5]+/.test(text)) {
+    return false
+  }
+  return /^=[0-9a-zA-Z]/.test(text)
+  // return text.startsWith('=')
 }
 
+/**
+ *
+ */
 export function isBoolean(text: string): boolean {
   const tl = text.toLowerCase()
   return tl === 'true' || tl === 'false'
 }
 
+/**
+ *
+ */
 export function isError(text: string, errorMapping: Record<string, ErrorType>): boolean {
   const upperCased = text.toUpperCase()
   const errorRegex = /#[A-Za-z0-9\/]+[?!]?/
   return errorRegex.test(upperCased) && Object.prototype.hasOwnProperty.call(errorMapping, upperCased)
 }
 
+/**
+ *
+ */
 export class CellContentParser {
+  /**
+   *
+   */
   constructor(
     private readonly config: Config,
     private readonly dateHelper: DateTimeHelper,
     private readonly numberLiteralsHelper: NumberLiteralHelper) {
   }
 
+  /**
+   *
+   */
   public parse(content: RawCellContent): CellContent.Type {
     if (content === undefined || content === null) {
       return CellContent.Empty.getSingletonInstance()
@@ -177,6 +256,9 @@ export class CellContentParser {
     }
   }
 
+  /**
+   *
+   */
   private currencyMatcher(token: string): Maybe<[string, string]> {
     for (const currency of this.config.currencySymbol) {
       if (token.startsWith(currency)) {

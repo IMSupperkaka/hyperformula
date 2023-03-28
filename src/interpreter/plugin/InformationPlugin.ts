@@ -35,75 +35,75 @@ export class InformationPlugin extends FunctionPlugin implements FunctionPluginT
       doesNotNeedArgumentsToBeComputed: true,
       vectorizationForbidden: true,
     },
-    'ISBINARY': {
-      method: 'isbinary',
-      parameters: [
-        {argumentType: ArgumentTypes.STRING}
-      ]
-    },
-    'ISERR': {
-      method: 'iserr',
-      parameters: [
-        {argumentType: ArgumentTypes.SCALAR}
-      ]
-    },
-    'ISFORMULA': {
-      method: 'isformula',
-      parameters: [
-        {argumentType: ArgumentTypes.NOERROR}
-      ],
-      doesNotNeedArgumentsToBeComputed: true,
-      vectorizationForbidden: true,
-    },
-    'ISNA': {
-      method: 'isna',
-      parameters: [
-        {argumentType: ArgumentTypes.SCALAR}
-      ]
-    },
-    'ISREF': {
-      method: 'isref',
-      parameters: [
-        {argumentType: ArgumentTypes.SCALAR}
-      ],
-      vectorizationForbidden: true,
-    },
-    'ISERROR': {
-      method: 'iserror',
-      parameters: [
-        {argumentType: ArgumentTypes.SCALAR}
-      ]
-    },
-    'ISBLANK': {
-      method: 'isblank',
-      parameters: [
-        {argumentType: ArgumentTypes.SCALAR}
-      ]
-    },
-    'ISNUMBER': {
-      method: 'isnumber',
-      parameters: [
-        {argumentType: ArgumentTypes.SCALAR}
-      ]
-    },
-    'ISLOGICAL': {
-      method: 'islogical',
-      parameters: [
-        {argumentType: ArgumentTypes.SCALAR}
-      ]
-    },
-    'ISTEXT': {
-      method: 'istext',
-      parameters: [
-        {argumentType: ArgumentTypes.SCALAR}
-      ]
-    },
-    'ISNONTEXT': {
-      method: 'isnontext',
-      parameters: [
-        {argumentType: ArgumentTypes.SCALAR}
-      ]
-    },
+    // 'ISBINARY': {
+    //   method: 'isbinary',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.STRING}
+    //   ]
+    // },
+    // 'ISERR': {
+    //   method: 'iserr',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.SCALAR}
+    //   ]
+    // },
+    // 'ISFORMULA': {
+    //   method: 'isformula',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.NOERROR}
+    //   ],
+    //   doesNotNeedArgumentsToBeComputed: true,
+    //   vectorizationForbidden: true,
+    // },
+    // 'ISNA': {
+    //   method: 'isna',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.SCALAR}
+    //   ]
+    // },
+    // 'ISREF': {
+    //   method: 'isref',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.SCALAR}
+    //   ],
+    //   vectorizationForbidden: true,
+    // },
+    // 'ISERROR': {
+    //   method: 'iserror',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.SCALAR}
+    //   ]
+    // },
+    // 'ISBLANK': {
+    //   method: 'isblank',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.SCALAR}
+    //   ]
+    // },
+    // 'ISNUMBER': {
+    //   method: 'isnumber',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.SCALAR}
+    //   ]
+    // },
+    // 'ISLOGICAL': {
+    //   method: 'islogical',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.SCALAR}
+    //   ]
+    // },
+    // 'ISTEXT': {
+    //   method: 'istext',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.SCALAR}
+    //   ]
+    // },
+    // 'ISNONTEXT': {
+    //   method: 'isnontext',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.SCALAR}
+    //   ]
+    // },
     'INDEX': {
       method: 'index',
       parameters: [
@@ -134,22 +134,22 @@ export class InformationPlugin extends FunctionPlugin implements FunctionPluginT
       doesNotNeedArgumentsToBeComputed: true,
       vectorizationForbidden: true,
     },
-    'SHEET': {
-      method: 'sheet',
-      parameters: [
-        {argumentType: ArgumentTypes.STRING}
-      ],
-      doesNotNeedArgumentsToBeComputed: true,
-      vectorizationForbidden: true,
-    },
-    'SHEETS': {
-      method: 'sheets',
-      parameters: [
-        {argumentType: ArgumentTypes.STRING}
-      ],
-      doesNotNeedArgumentsToBeComputed: true,
-      vectorizationForbidden: true,
-    }
+    // 'SHEET': {
+    //   method: 'sheet',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.STRING}
+    //   ],
+    //   doesNotNeedArgumentsToBeComputed: true,
+    //   vectorizationForbidden: true,
+    // },
+    // 'SHEETS': {
+    //   method: 'sheets',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.STRING}
+    //   ],
+    //   doesNotNeedArgumentsToBeComputed: true,
+    //   vectorizationForbidden: true,
+    // }
   }
 
   /**

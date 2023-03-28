@@ -20,14 +20,14 @@ import {ArgumentTypes, FunctionPlugin, FunctionPluginTypecheck} from './Function
  */
 export class TextPlugin extends FunctionPlugin implements FunctionPluginTypecheck<TextPlugin> {
   public static implementedFunctions = {
-    'CONCATENATE': {
-      method: 'concatenate',
-      parameters: [
-        {argumentType: ArgumentTypes.STRING}
-      ],
-      repeatLastArgs: 1,
-      expandRanges: true,
-    },
+    // 'CONCATENATE': {
+    //   method: 'concatenate',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.STRING}
+    //   ],
+    //   repeatLastArgs: 1,
+    //   expandRanges: true,
+    // },
     'VALUE': {
       method: 'value',
       parameters: [
@@ -41,13 +41,13 @@ export class TextPlugin extends FunctionPlugin implements FunctionPluginTypechec
         {argumentType: ArgumentTypes.STRING}
       ]
     },
-    'SPLIT': {
-      method: 'split',
-      parameters: [
-        {argumentType: ArgumentTypes.STRING},
-        {argumentType: ArgumentTypes.NUMBER},
-      ]
-    },
+    // 'SPLIT': {
+    //   method: 'split',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.STRING},
+    //     {argumentType: ArgumentTypes.NUMBER},
+    //   ]
+    // },
     'LEN': {
       method: 'len',
       parameters: [
@@ -80,18 +80,18 @@ export class TextPlugin extends FunctionPlugin implements FunctionPluginTypechec
         {argumentType: ArgumentTypes.SCALAR}
       ]
     },
-    'PROPER': {
-      method: 'proper',
-      parameters: [
-        {argumentType: ArgumentTypes.STRING}
-      ]
-    },
-    'CLEAN': {
-      method: 'clean',
-      parameters: [
-        {argumentType: ArgumentTypes.STRING}
-      ]
-    },
+    // 'PROPER': {
+    //   method: 'proper',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.STRING}
+    //   ]
+    // },
+    // 'CLEAN': {
+    //   method: 'clean',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.STRING}
+    //   ]
+    // },
     'REPT': {
       method: 'rept',
       parameters: [
@@ -130,23 +130,23 @@ export class TextPlugin extends FunctionPlugin implements FunctionPluginTypechec
         {argumentType: ArgumentTypes.NUMBER, defaultValue: 1},
       ]
     },
-    'SUBSTITUTE': {
-      method: 'substitute',
-      parameters: [
-        {argumentType: ArgumentTypes.STRING},
-        {argumentType: ArgumentTypes.STRING},
-        {argumentType: ArgumentTypes.STRING},
-        {argumentType: ArgumentTypes.NUMBER, optionalArg: true}
-      ]
-    },
-    'FIND': {
-      method: 'find',
-      parameters: [
-        {argumentType: ArgumentTypes.STRING},
-        {argumentType: ArgumentTypes.STRING},
-        {argumentType: ArgumentTypes.NUMBER, defaultValue: 1},
-      ]
-    },
+    // 'SUBSTITUTE': {
+    //   method: 'substitute',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.STRING},
+    //     {argumentType: ArgumentTypes.STRING},
+    //     {argumentType: ArgumentTypes.STRING},
+    //     {argumentType: ArgumentTypes.NUMBER, optionalArg: true}
+    //   ]
+    // },
+    // 'FIND': {
+    //   method: 'find',
+    //   parameters: [
+    //     {argumentType: ArgumentTypes.STRING},
+    //     {argumentType: ArgumentTypes.STRING},
+    //     {argumentType: ArgumentTypes.NUMBER, defaultValue: 1},
+    //   ]
+    // },
     'UPPER': {
       method: 'upper',
       parameters: [
@@ -184,7 +184,6 @@ export class TextPlugin extends FunctionPlugin implements FunctionPluginTypechec
       }
 
       const {dateTime} = this.dateTimeHelper.parseDateTimeFromConfigFormats(text)
-      console.log('dateTime', dateTime)
  
       if (dateTime && instanceOfSimpleDate(dateTime)) {
         // 保留5位小数
