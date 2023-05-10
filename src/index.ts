@@ -5,7 +5,7 @@
 
 import {SimpleCellRange} from './AbsoluteCellRange'
 import {CellError, CellType, CellValueDetailedType, CellValueType, ErrorType, SimpleCellAddress} from './Cell'
-import {RawCellContent} from './CellContentParser'
+import {RawCellContent, isFormula} from './CellContentParser'
 import {CellValue, DetailedCellError, NoErrorCellValue} from './CellValue'
 import {Config, ConfigParams} from './Config'
 import {ColumnRowIndex} from './CrudOperations'
@@ -51,9 +51,16 @@ import {FunctionArgument, FunctionPlugin, FunctionPluginDefinition} from './inte
 import {FormatInfo} from './interpreter/InterpreterValue'
 import * as plugins from './interpreter/plugin'
 import {SimpleRangeValue} from './interpreter/SimpleRangeValue'
-import {NamedExpression, NamedExpressionOptions} from './NamedExpressions'
+import {NamedExpression, NamedExpressions, NamedExpressionOptions} from './NamedExpressions'
 import {SerializedNamedExpression} from './Serialization'
 import {Sheet, SheetDimensions, Sheets} from './Sheet'
+import { FormulaLexer, ParserWithCaching, buildLexerConfig, Unparser } from './parser'
+import { FunctionRegistry } from './interpreter/FunctionRegistry'
+import { Transformer } from './dependencyTransformers/Transformer'
+import { AddColumnsTransformer } from './dependencyTransformers/AddColumnsTransformer'
+import { RemoveColumnsTransformer } from './dependencyTransformers/RemoveColumnsTransformer'
+import { AddRowsTransformer } from './dependencyTransformers/AddRowsTransformer'
+import { RemoveRowsTransformer } from './dependencyTransformers/RemoveRowsTransformer'
 
 /** @internal */
 class HyperFormulaNS extends HyperFormula {
@@ -116,6 +123,7 @@ export {
   DenseSparseChooseBasedOnThreshold,
   CellValue,
   NoErrorCellValue,
+  Config,
   ConfigParams,
   ExportedChange,
   RawCellContent,
@@ -130,6 +138,7 @@ export {
   FunctionPluginDefinition,
   FunctionArgument,
   NamedExpression,
+  NamedExpressions,
   NamedExpressionOptions,
   HyperFormula,
   CellType,
@@ -170,4 +179,15 @@ export {
   TargetLocationHasArrayError,
   UnableToParseError,
   SerializedNamedExpression,
+  FormulaLexer,
+  ParserWithCaching,
+  Unparser,
+  FunctionRegistry,
+  Transformer,
+  AddColumnsTransformer,
+  RemoveColumnsTransformer,
+  AddRowsTransformer,
+  RemoveRowsTransformer,
+  buildLexerConfig,
+  isFormula
 }

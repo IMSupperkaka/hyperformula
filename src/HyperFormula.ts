@@ -4303,7 +4303,7 @@ export class HyperFormula implements TypedEmitter {
     }
   }
 
-  private extractTemporaryFormula(formulaString: string, sheetId: number = 1): { ast?: Ast, address: SimpleCellAddress, dependencies: RelativeDependency[] } {
+  public extractTemporaryFormula(formulaString: string, sheetId: number = 1): { ast?: Ast, address: SimpleCellAddress, dependencies: RelativeDependency[] } {
     const parsedCellContent = this._cellContentParser.parse(formulaString)
     const address = {sheet: sheetId, col: 0, row: 0}
     if (!(parsedCellContent instanceof CellContent.Formula)) {
@@ -4346,5 +4346,14 @@ export class HyperFormula implements TypedEmitter {
     } else {
       return []
     }
+  }
+
+  /**
+   * 解析公式
+   * @param formula 
+   * @returns 
+   */
+  public tokenizeFormula(formula: string) {
+    return this._parser.tokenizeFormula(formula)
   }
 }
