@@ -51,7 +51,7 @@ export class ErrorMessage {
   public static IndexLarge = '索引太大。'
   public static Formula = '预期公式。'
   public static NegativeCount = '计数不能为负。'
-  public static ParseError = '分析错误。'
+  public static ParseError = '解析错误。'
   public static SheetRef = '工作表不存在。'
   public static PeriodLong = '周期数不能超过生命长度。'
   public static InvalidDate = '无效日期。'
@@ -75,4 +75,6 @@ export class ErrorMessage {
   public static FunctionName = (arg: string) => `函数名 ${arg} 不能被辨识。`
   public static NamedExpressionName = (arg: string) => `命名表达式 ${arg} 不能被辨识。`
   public static LicenseKey = (arg: string) => `许可证密钥为 ${arg}。`
+  public static CircleError = '公式包含循环依赖。'
+  public static DivideByZeroError = '除数不能为 0。'
 }

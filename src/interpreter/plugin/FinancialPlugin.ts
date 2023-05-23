@@ -389,7 +389,7 @@ export class FinancialPlugin extends FunctionPlugin implements FunctionPluginTyp
     return this.runFunction(ast.args, state, this.metadata('DOLLARDE'),
       (dollar, fraction) => {
         if (fraction < 1) {
-          return new CellError(ErrorType.DIV_BY_ZERO)
+          return new CellError(ErrorType.DIV_BY_ZERO, ErrorMessage.DivideByZeroError)
         }
         fraction = Math.trunc(fraction)
 
@@ -405,7 +405,7 @@ export class FinancialPlugin extends FunctionPlugin implements FunctionPluginTyp
     return this.runFunction(ast.args, state, this.metadata('DOLLARFR'),
       (dollar, fraction) => {
         if (fraction < 1) {
-          return new CellError(ErrorType.DIV_BY_ZERO)
+          return new CellError(ErrorType.DIV_BY_ZERO, ErrorMessage.DivideByZeroError)
         }
         fraction = Math.trunc(fraction)
 
@@ -430,7 +430,7 @@ export class FinancialPlugin extends FunctionPlugin implements FunctionPluginTyp
     return this.runFunction(ast.args, state, this.metadata('ISPMT'),
       (rate, period, periods, value) => {
         if (periods === 0) {
-          return new CellError(ErrorType.DIV_BY_ZERO)
+          return new CellError(ErrorType.DIV_BY_ZERO, ErrorMessage.DivideByZeroError)
         }
         return value * rate * (period / periods - 1)
       }
@@ -451,7 +451,7 @@ export class FinancialPlugin extends FunctionPlugin implements FunctionPluginTyp
       (rate, payment, present, future, type) => {
         if (rate === 0) {
           if (payment === 0) {
-            return new CellError(ErrorType.DIV_BY_ZERO)
+            return new CellError(ErrorType.DIV_BY_ZERO, ErrorMessage.DivideByZeroError)
           }
           return (-present - future) / payment
         }
@@ -514,7 +514,7 @@ export class FinancialPlugin extends FunctionPlugin implements FunctionPluginTyp
           if (periods === 0) {
             return new CellError(ErrorType.NUM)
           } else {
-            return new CellError(ErrorType.DIV_BY_ZERO)
+            return new CellError(ErrorType.DIV_BY_ZERO, ErrorMessage.DivideByZeroError)
           }
         }
         if (rate === 0) {
@@ -542,7 +542,7 @@ export class FinancialPlugin extends FunctionPlugin implements FunctionPluginTyp
     return this.runFunction(ast.args, state, this.metadata('SLN'),
       (cost, salvage, life) => {
         if (life === 0) {
-          return new CellError(ErrorType.DIV_BY_ZERO)
+          return new CellError(ErrorType.DIV_BY_ZERO, ErrorMessage.DivideByZeroError)
         }
         return (cost - salvage) / life
       }
@@ -689,7 +689,7 @@ export class FinancialPlugin extends FunctionPlugin implements FunctionPluginTyp
           }
         }
         if (!posFlag || !negFlag) {
-          return new CellError(ErrorType.DIV_BY_ZERO)
+          return new CellError(ErrorType.DIV_BY_ZERO, ErrorMessage.DivideByZeroError)
         }
         const n = vals.length
         const nom = npvCore(rrate, posValues)
@@ -791,7 +791,7 @@ function npvCore(rate: number, args: number[]): number | CellError {
       if (acc === 0) {
         continue
       } else {
-        return new CellError(ErrorType.DIV_BY_ZERO)
+        return new CellError(ErrorType.DIV_BY_ZERO, ErrorMessage.DivideByZeroError)
       }
     }
     acc /= 1 + rate
