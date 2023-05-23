@@ -216,7 +216,7 @@ export function sheetIndexToString(sheetId: number, sheetMappingFn: SheetIndexMa
   }
 
   if (simpleSheetNameRegex.test(sheetName)) {
-    return sheetName
+    return `'${sheetName}'`
   } else {
     sheetName = sheetName.replace(/'/g, "''")
     return `'${sheetName}'`

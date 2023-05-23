@@ -54,13 +54,17 @@ import {SimpleRangeValue} from './interpreter/SimpleRangeValue'
 import {NamedExpression, NamedExpressions, NamedExpressionOptions} from './NamedExpressions'
 import {SerializedNamedExpression} from './Serialization'
 import {Sheet, SheetDimensions, Sheets} from './Sheet'
-import { FormulaLexer, ParserWithCaching, buildLexerConfig, Unparser } from './parser'
+import { FormulaLexer, ParserWithCaching, buildLexerConfig, Unparser, CellAddress, cellAddressFromString, simpleCellRangeFromString, simpleCellAddressToString, simpleCellRangeToString, simpleCellAddressFromString } from './parser'
 import { FunctionRegistry } from './interpreter/FunctionRegistry'
 import { Transformer } from './dependencyTransformers/Transformer'
 import { AddColumnsTransformer } from './dependencyTransformers/AddColumnsTransformer'
 import { RemoveColumnsTransformer } from './dependencyTransformers/RemoveColumnsTransformer'
 import { AddRowsTransformer } from './dependencyTransformers/AddRowsTransformer'
 import { RemoveRowsTransformer } from './dependencyTransformers/RemoveRowsTransformer'
+import { MoveCellsTransformer } from './dependencyTransformers/MoveCellsTransformer'
+import { ColumnsSpan, RowsSpan } from './Span'
+import { isSimpleCellRange, AbsoluteCellRange } from './AbsoluteCellRange'
+import { isSimpleCellAddress } from './Cell'
 
 /** @internal */
 class HyperFormulaNS extends HyperFormula {
@@ -188,6 +192,18 @@ export {
   RemoveColumnsTransformer,
   AddRowsTransformer,
   RemoveRowsTransformer,
+  MoveCellsTransformer,
+  ColumnsSpan,
+  AbsoluteCellRange,
+  RowsSpan,
+  CellAddress,
+  cellAddressFromString,
+  simpleCellRangeFromString,
+  simpleCellAddressToString,
+  simpleCellRangeToString,
+  simpleCellAddressFromString,
   buildLexerConfig,
-  isFormula
+  isFormula,
+  isSimpleCellRange,
+  isSimpleCellAddress,
 }

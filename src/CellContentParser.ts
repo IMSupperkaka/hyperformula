@@ -111,39 +111,39 @@ export namespace CellContent {
  * @param text - formula
  */
 export function isFormula(text: string): boolean {
-  //  9. 符号 */开头 + 数字 文本处理
-  if (/^=[*/]+[0-9]*/.test(text)) {
-    return false
-  }
+  // //  9. 符号 */开头 + 数字 文本处理
+  // if (/^=[*/]+[0-9]*/.test(text)) {
+  //   return false
+  // }
 
-  // &符号
-  if (/^=[+-]?(([a-zA-Z]*[0-9]+)|("\S+"))(&[+-]?(("\S+")|([a-zA-Z]*[0-9]+)))+$/.test(text)) {
-    return true
-  }
-  // 科学计数法
-  if (/^=\d(?:\.(\d*))?e([+-]\d+)/.test(text)) {
-    return true
-  }
-  // 数字之间或之前 + - * / 公式
-  if (/^=([0-9]*[*/+-][0-9]+)+$/.test(text)) {
-    return true
-  }
-  // 数字 + % 文本处理
-  if (/^=[0-9]+%/.test(text)) {
-    return true
-  }
+  // // &符号
+  // if (/^=[+-]?(([a-zA-Z]*[0-9]+)|("\S+"))(&[+-]?(("\S+")|([a-zA-Z]*[0-9]+)))+$/.test(text)) {
+  //   return true
+  // }
+  // // 科学计数法
+  // if (/^=\d(?:\.(\d*))?e([+-]\d+)/.test(text)) {
+  //   return true
+  // }
+  // // 数字之间或之前 + - * / 公式
+  // if (/^=([0-9]*[*/+-][0-9]+)+$/.test(text)) {
+  //   return true
+  // }
+  // // 数字 + % 文本处理
+  // if (/^=[0-9]+%/.test(text)) {
+  //   return true
+  // }
 
-  // 5. 数字 + 文字【非数字】 文本处理  【上一个已经排除数字后是+ - * / 百分比的情况】
-  if (/^=[0-9]+\D/.test(text)) {
-    return false
-  }
+  // // 5. 数字 + 文字【非数字】 文本处理  【上一个已经排除数字后是+ - * / 百分比的情况】
+  // if (/^=[0-9]+\D/.test(text)) {
+  //   return false
+  // }
 
-  // 8. = 中文文本  文本处理
-  if (/^=[\u4E00-\u9FA5]+/.test(text)) {
-    return false
-  }
-  return /^=[0-9a-zA-Z]/.test(text)
-  // return text.startsWith('=')
+  // // 8. = 中文文本  文本处理
+  // if (/^=[\u4E00-\u9FA5]+/.test(text)) {
+  //   return false
+  // }
+  // return /^=[0-9a-zA-Z]/.test(text)
+  return text.startsWith('=')
 }
 
 /**

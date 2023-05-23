@@ -7,8 +7,14 @@ import {NoSheetWithIdError, NoSheetWithNameError, SheetNameAlreadyTakenError} fr
 import {TranslationPackage, UIElement} from '../i18n'
 import {Maybe} from '../Maybe'
 
+/**
+ * FIX Sheet名也需要大小写敏感
+ * @param sheetDisplayName 
+ * @returns 
+ */
 function canonicalize(sheetDisplayName: string): string {
-  return sheetDisplayName.toLowerCase()
+  return sheetDisplayName
+  // return sheetDisplayName.toLowerCase()
 }
 
 class Sheet {
